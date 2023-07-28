@@ -25,10 +25,10 @@ async function bootstrap() {
   }
   app.enableShutdownHooks();
   await app.listen(port, host);
-  Logger.log(`Server started on http://${host}:${port}/api/v1`, 'Server');
+  Logger.log(`Server started on http://localhost:${port}/api/v1`, 'Server');
   if (enableApiDoc) {
     Logger.log(
-      `Api doc started on http://${host}:${port}/${apiDocPrefix}`,
+      `Api doc started on http://localhost:${port}/${apiDocPrefix}`,
       'Api Doc',
     );
   }

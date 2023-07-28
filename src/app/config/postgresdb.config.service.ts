@@ -1,3 +1,7 @@
+import { NoteTag } from '@app/entities/note-tag.entity';
+import { Note } from '@app/entities/note.entity';
+import { Tag } from '@app/entities/tag.entity';
+import { Todo } from '@app/entities/todo.entity';
 import { User } from '@app/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -19,7 +23,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         ca: this.config.get<string>('CA_SSL_PATH'),
         rejectUnauthorized: false,
       },
-      entities: [User],
+      entities: [User, Note, Todo, Tag, NoteTag],
       synchronize: false,
     };
   }
