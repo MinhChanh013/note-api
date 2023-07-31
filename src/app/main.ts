@@ -24,6 +24,7 @@ async function bootstrap() {
     registerSwagger(app, { appName, appVer, apiPrefix: `/${apiDocPrefix}` });
   }
   app.enableShutdownHooks();
+  app.enableCors();
   await app.listen(port, host);
   Logger.log(`Server started on http://localhost:${port}/api/v1`, 'Server');
   if (enableApiDoc) {

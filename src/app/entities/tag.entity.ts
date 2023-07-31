@@ -7,7 +7,7 @@ import { NoteTag } from './note-tag.entity';
 export class Tag {
   @PrimaryGeneratedColumn()
   @Expose({ name: 'tag_id' })
-  tagId: number;
+  tagId?: number;
 
   @ApiProperty({
     example: 'Meeting',

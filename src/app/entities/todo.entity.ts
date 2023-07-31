@@ -13,7 +13,7 @@ import { Note } from './note.entity';
 export class Todo {
   @PrimaryGeneratedColumn()
   @Expose({ name: 'todo_id' })
-  todoId: number;
+  todoId?: number;
 
   @ApiProperty({
     example: 'Họp hội nghị',

@@ -12,7 +12,7 @@ import { Tag } from './tag.entity';
 @Entity({ name: 'note-tag' })
 export class NoteTag {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @ManyToOne(() => Note, (note) => note.tags)
   @JoinColumn({ name: 'note' })

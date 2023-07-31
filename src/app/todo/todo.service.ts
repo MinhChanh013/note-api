@@ -13,4 +13,9 @@ export class TodoService {
   public async getAllTodos(): Promise<Todo[] | null> {
     return await this.todoRepository.find();
   }
+
+  public async createTodos(request: Todo): Promise<Todo | null> {
+    request.createdAt = new Date().toISOString();
+    return await this.todoRepository.save(request);
+  }
 }

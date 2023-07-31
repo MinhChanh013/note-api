@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Expose } from 'class-transformer';
-import { Todo } from './todo.entity';
-import { NoteTag } from './note-tag.entity';
+import { Todo } from '@app/entities/todo.entity';
+import { Tag } from '@app/entities/tag.entity';
 
 @Entity({ name: 'note' })
-export class Note {
+export class NoteCreateRequest {
   @PrimaryGeneratedColumn()
   @Expose({ name: 'note_id' })
   noteId?: number;
@@ -17,14 +17,14 @@ export class Note {
   title: string;
 
   @ApiProperty({
-    example: '2023-07-28 08:30:00+07:00',
+    example: '2023-07-28 08:00:00',
   })
   @Expose({ name: 'time_from' })
   @Column({ nullable: true })
   timeFrom: string;
 
   @ApiProperty({
-    example: '2023-07-28 17:30:00+07:00',
+    example: '2023-07-28 17:30:00',
   })
   @Expose({ name: 'time_to' })
   @Column({ nullable: true })
@@ -51,7 +51,6 @@ export class Note {
       },
     ],
   })
-  @OneToMany(() => Todo, (todo) => todo.note)
   todos: Todo[];
 
   @ApiProperty({
@@ -62,8 +61,7 @@ export class Note {
       },
     ],
   })
-  @OneToMany(() => NoteTag, (noteTag) => noteTag.note)
-  tags: NoteTag[];
+  tags: Tag[];
 
   @Expose({ name: 'created_at' })
   @Column({ nullable: true })

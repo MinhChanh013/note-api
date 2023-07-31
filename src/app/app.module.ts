@@ -4,9 +4,17 @@ import { UsersModule } from './user/user.module';
 import { NoteModule } from './note/note.module';
 import { TodoModule } from './todo/todo.module';
 import { TagModule } from './tag/tag.module';
+import { NoteTagModule } from './note-tag/note-tag.module';
 
 @Module({
-  imports: [ConfigModule, UsersModule, NoteModule, TodoModule, TagModule],
+  imports: [
+    ConfigModule,
+    UsersModule,
+    NoteModule,
+    TodoModule,
+    TagModule,
+    NoteTagModule,
+  ],
   providers: [],
   controllers: [],
 })
