@@ -21,6 +21,9 @@ export class Tag {
   @Column({ nullable: true })
   cover: string;
 
+  @Column({ nullable: true })
+  color: string;
+
   @OneToMany(() => NoteTag, (noteTag) => noteTag.tag)
   notes: NoteTag[];
 

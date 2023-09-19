@@ -35,6 +35,27 @@ export class NoteService {
     return newNoteData;
   }
 
+  public async getNote(noteId: string) {
+    const data = await this.noteRepository
+      .createQueryBuilder('note')
+      .leftJoinAndSelect('note.todos', 'todo')
+      .leftJoinAndSelect('note.tags', 'note-tag')
+      .leftJoinAndSelect('note-tag.tag', 'tag')
+      .orderBy('note.createdAt', 'DESC')
+      .where('note.noteId = :noteId', {
+        noteId,
+      })
+      .getMany();
+
+    const notesData = snakeCaseKeys(Note, data as unknown as Note);
+
+    const newNoteData = notesData.map((note: Note) => ({
+      ...note,
+      tags: note.tags.map((noteTag: NoteTag) => noteTag.tag),
+    }))[0];
+    return newNoteData;
+  }
+
   public async createNote(request: NoteCreateRequest): Promise<Note | null> {
     request.createdAt = new Date().toISOString();
     // save note

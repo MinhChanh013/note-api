@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Post, Body } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Body, Param } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { NoteService } from './note.service';
 import { Note } from '@app/entities/note.entity';
@@ -14,6 +14,13 @@ export class NoteController {
   @HttpCode(200)
   public async getNotes() {
     const data = await this.noteService.getNotes();
+    return data;
+  }
+
+  @Get('note/:noteId')
+  @HttpCode(200)
+  public async getNote(@Param('noteId') noteId: string) {
+    const data = await this.noteService.getNote(noteId);
     return data;
   }
 

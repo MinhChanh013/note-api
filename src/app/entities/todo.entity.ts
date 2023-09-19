@@ -16,6 +16,12 @@ export class Todo {
   todoId?: number;
 
   @ApiProperty({
+    example: 'ff18819f-0abe-4679-9d0d-54d70b29ecd5',
+  })
+  @Column({ nullable: true })
+  todoUuid: string;
+
+  @ApiProperty({
     example: 'Họp hội nghị',
   })
   @Column({ nullable: true })
