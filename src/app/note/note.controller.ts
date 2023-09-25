@@ -39,4 +39,15 @@ export class NoteController {
     );
     return noteData;
   }
+
+  @Post('delete')
+  @ApiOkResponse({
+    description: 'Delete note',
+  })
+  async deleteNote(
+    @Body() deleteNoteDto: { idNote: string },
+  ): Promise<NoteCreateRequest | object> {
+    const data = await this.noteService.deleteNote(deleteNoteDto.idNote);
+    return data;
+  }
 }

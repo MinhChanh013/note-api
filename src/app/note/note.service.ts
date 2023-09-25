@@ -79,4 +79,9 @@ export class NoteService {
       return { ...newNote, todos: request.todos };
     }
   }
+
+  public async deleteNote(idNote: string): Promise<NoteCreateRequest | object> {
+    const data = await this.noteRepository.delete(idNote);
+    return data;
+  }
 }
