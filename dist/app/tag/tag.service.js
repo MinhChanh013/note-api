@@ -28,6 +28,21 @@ let TagService = class TagService {
         const payload = Object.assign(Object.assign({}, request), { createdAt: new Date().toISOString() });
         return await this.tagRepository.save(payload);
     }
+    async updateTag(request, tagId) {
+        const tagIdNumber = parseInt(tagId);
+        await this.tagRepository.update({
+            tagId: tagIdNumber,
+        }, {
+            label: request.label,
+            cover: request.cover,
+            color: request.color,
+        });
+        return true;
+    }
+    async removeTag(tagId) {
+        await this.tagRepository.delete({ tagId: parseInt(tagId) });
+        return true;
+    }
 };
 TagService = __decorate([
     (0, common_1.Injectable)(),

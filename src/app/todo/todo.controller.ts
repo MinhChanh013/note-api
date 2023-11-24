@@ -1,8 +1,9 @@
-import { Controller, Get, HttpCode, Body, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, Body, Post, Put } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TodoService } from './todo.service';
 import { snakeCaseKeys } from 'src/utils/camelcase.util';
 import { Todo } from '@app/entities/todo.entity';
+import { TodoDTO } from './dto/todo-update-request.dto';
 
 @ApiTags('todo')
 @Controller('todo')

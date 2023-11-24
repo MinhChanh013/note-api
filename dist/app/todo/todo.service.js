@@ -28,6 +28,31 @@ let TodoService = class TodoService {
         request.createdAt = new Date().toISOString();
         return await this.todoRepository.save(request);
     }
+    async updateTodos(request, noteId) {
+        for (const todo of request) {
+            if (!(await this.todoRepository.findOne({
+                where: { todoUuid: todo.todoUuid },
+            }))) {
+                const payloadTodo = Object.assign(Object.assign({}, todo), { note: { noteId: noteId } });
+                await this.todoRepository.save(payloadTodo);
+            }
+            else {
+                if (todo.isDelete) {
+                    await this.todoRepository.delete(todo.todoId);
+                }
+                else {
+                    await this.todoRepository.update({
+                        todoUuid: todo.todoUuid,
+                    }, {
+                        label: todo.label,
+                        status: todo.status,
+                        trim: todo.trim,
+                    });
+                }
+            }
+        }
+        return true;
+    }
 };
 TodoService = __decorate([
     (0, common_1.Injectable)(),

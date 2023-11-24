@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const note_service_1 = require("./note.service");
 const camelcase_util_1 = require("../../utils/camelcase.util");
 const note_create_request_dto_1 = require("./dto/note-create-request.dto");
+const note_update_request_dto_1 = require("./dto/note-update-request.dto");
 let NoteController = class NoteController {
     constructor(noteService) {
         this.noteService = noteService;
@@ -38,6 +39,9 @@ let NoteController = class NoteController {
     async deleteNote(deleteNoteDto) {
         const data = await this.noteService.deleteNote(deleteNoteDto.idNote);
         return data;
+    }
+    async updateNote(request, noteId) {
+        return await this.noteService.updateNote(noteId, request);
     }
 };
 __decorate([
@@ -75,6 +79,17 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], NoteController.prototype, "deleteNote", null);
+__decorate([
+    (0, common_1.Put)('update/:noteId'),
+    (0, swagger_1.ApiOkResponse)({
+        description: 'Update note',
+    }),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('noteId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [note_update_request_dto_1.NoteUpdateDTO, String]),
+    __metadata("design:returntype", Promise)
+], NoteController.prototype, "updateNote", null);
 NoteController = __decorate([
     (0, swagger_1.ApiTags)('note'),
     (0, common_1.Controller)('note'),

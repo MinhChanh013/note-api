@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { NoteCreateRequest } from './dto/note-create-request.dto';
 import { snakeCaseKeys } from 'src/utils/camelcase.util';
 import { NoteTag } from '@app/entities/note-tag.entity';
+import { NoteUpdateDTO } from './dto/note-update-request.dto';
 
 @Injectable()
 export class NoteService {
@@ -30,7 +31,9 @@ export class NoteService {
 
     const newNoteData = notesData.map((note: Note) => ({
       ...note,
-      tags: note.tags.map((noteTag: NoteTag) => noteTag.tag),
+      tags: note.tags.map((noteTag: NoteTag) => {
+        return { id: noteTag.id, ...noteTag.tag };
+      }),
     }));
     return newNoteData;
   }
@@ -51,7 +54,9 @@ export class NoteService {
 
     const newNoteData = notesData.map((note: Note) => ({
       ...note,
-      tags: note.tags.map((noteTag: NoteTag) => noteTag.tag),
+      tags: note.tags.map((noteTag: NoteTag) => {
+        return { id: noteTag.id, ...noteTag.tag };
+      }),
     }))[0];
     return newNoteData;
   }
@@ -83,5 +88,27 @@ export class NoteService {
   public async deleteNote(idNote: string): Promise<NoteCreateRequest | object> {
     const data = await this.noteRepository.delete(idNote);
     return data;
+  }
+
+  public async updateNote(
+    noteId: string,
+    request: NoteUpdateDTO,
+  ): Promise<boolean> {
+    const nodeIdNumber = Number(noteId);
+    await this.noteRepository.update(
+      {
+        noteId: nodeIdNumber,
+      },
+      {
+        title: request.title,
+        timeFrom: request.timeFrom,
+        timeTo: request.timeTo,
+        description: request.description,
+        cover: request.cover,
+      },
+    );
+    await this.todoService.updateTodos(request.todos, nodeIdNumber);
+    await this.noteTagService.updateNoteTag(request.tags, nodeIdNumber);
+    return true;
   }
 }

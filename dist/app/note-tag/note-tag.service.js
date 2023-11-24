@@ -22,14 +22,32 @@ let NoteTagService = class NoteTagService {
         this.noteTagRepository = noteTagRepository;
     }
     async getNoteTags() {
-        return this.noteTagRepository
+        return await this.noteTagRepository
             .createQueryBuilder('note-tag')
             .leftJoinAndSelect('note-tag.tag', 'tags')
             .leftJoinAndSelect('note-tag.note', 'notes')
             .getMany();
     }
     async createNoteTag(request) {
-        return this.noteTagRepository.save(request);
+        return await this.noteTagRepository.save(request);
+    }
+    async updateNoteTag(request, nodeId) {
+        for (const noteTag of request) {
+            if (!noteTag.id) {
+                const payloadNoteTag = {
+                    note: { noteId: nodeId },
+                    tag: { tagId: noteTag.tagId },
+                    createdAt: new Date().toISOString(),
+                };
+                await this.noteTagRepository.save(payloadNoteTag);
+            }
+            else {
+                if (noteTag.isDelete) {
+                    await this.noteTagRepository.delete(noteTag.id);
+                }
+            }
+        }
+        return true;
     }
 };
 NoteTagService = __decorate([

@@ -1,9 +1,10 @@
-import { Controller, Get, HttpCode, Post, Body } from '@nestjs/common';
+import { Controller, Get, HttpCode, Post, Body, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { NoteTagService } from './note-tag.service';
 import { snakeCaseKeys } from 'src/utils/camelcase.util';
 import { NoteTag } from '@app/entities/note-tag.entity';
 import { NoteTagRequest } from './dto/note-tag-request.dto';
+import { NoteTagDTO } from './dto/note-tag-update-request.dto';
 
 @ApiTags('note-tag')
 @Controller('note-tag')

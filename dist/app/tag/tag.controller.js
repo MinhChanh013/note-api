@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const tag_service_1 = require("./tag.service");
 const tag_entity_1 = require("../entities/tag.entity");
 const camelcase_util_1 = require("../../utils/camelcase.util");
+const tag_update_request_dto_1 = require("./dto/tag-update-request.dto");
 let TagController = class TagController {
     constructor(tagService) {
         this.tagService = tagService;
@@ -31,6 +32,12 @@ let TagController = class TagController {
         const data = await this.tagService.createTag(request);
         const tagsData = (0, camelcase_util_1.snakeCaseKeys)(tag_entity_1.Tag, data);
         return tagsData;
+    }
+    async updateTag(request, tagId) {
+        return await this.tagService.updateTag(request, tagId);
+    }
+    async removeTag(tagId) {
+        return await this.tagService.removeTag(tagId);
     }
 };
 __decorate([
@@ -48,6 +55,21 @@ __decorate([
     __metadata("design:paramtypes", [tag_entity_1.Tag]),
     __metadata("design:returntype", Promise)
 ], TagController.prototype, "createTag", null);
+__decorate([
+    (0, common_1.Put)('update/:tagId'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('tagId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [tag_update_request_dto_1.TagUpdateDTO, String]),
+    __metadata("design:returntype", Promise)
+], TagController.prototype, "updateTag", null);
+__decorate([
+    (0, common_1.Post)('remove/:tagId'),
+    __param(0, (0, common_1.Param)('tagId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TagController.prototype, "removeTag", null);
 TagController = __decorate([
     (0, swagger_1.ApiTags)('tag'),
     (0, common_1.Controller)('tag'),

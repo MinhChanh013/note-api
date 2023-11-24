@@ -1,9 +1,18 @@
-import { Controller, Get, HttpCode, Post, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Put,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { NoteService } from './note.service';
 import { Note } from '@app/entities/note.entity';
 import { snakeCaseKeys } from 'src/utils/camelcase.util';
 import { NoteCreateRequest } from './dto/note-create-request.dto';
+import { NoteUpdateDTO } from './dto/note-update-request.dto';
 
 @ApiTags('note')
 @Controller('note')
@@ -49,5 +58,16 @@ export class NoteController {
   ): Promise<NoteCreateRequest | object> {
     const data = await this.noteService.deleteNote(deleteNoteDto.idNote);
     return data;
+  }
+
+  @Put('update/:noteId')
+  @ApiOkResponse({
+    description: 'Update note',
+  })
+  async updateNote(
+    @Body() request: NoteUpdateDTO,
+    @Param('noteId') noteId: string,
+  ): Promise<boolean> {
+    return await this.noteService.updateNote(noteId, request);
   }
 }

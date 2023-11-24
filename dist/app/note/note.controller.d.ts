@@ -1,5 +1,6 @@
 import { NoteService } from './note.service';
 import { NoteCreateRequest } from './dto/note-create-request.dto';
+import { NoteUpdateDTO } from './dto/note-update-request.dto';
 export declare class NoteController {
     private readonly noteService;
     constructor(noteService: NoteService);
@@ -9,4 +10,5 @@ export declare class NoteController {
     deleteNote(deleteNoteDto: {
         idNote: string;
     }): Promise<NoteCreateRequest | object>;
+    updateNote(request: NoteUpdateDTO, noteId: string): Promise<boolean>;
 }

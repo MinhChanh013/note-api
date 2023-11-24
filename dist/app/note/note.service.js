@@ -35,7 +35,9 @@ let NoteService = class NoteService {
             .orderBy('note.createdAt', 'DESC')
             .getMany();
         const notesData = (0, camelcase_util_1.snakeCaseKeys)(note_entity_1.Note, data);
-        const newNoteData = notesData.map((note) => (Object.assign(Object.assign({}, note), { tags: note.tags.map((noteTag) => noteTag.tag) })));
+        const newNoteData = notesData.map((note) => (Object.assign(Object.assign({}, note), { tags: note.tags.map((noteTag) => {
+                return Object.assign({ id: noteTag.id }, noteTag.tag);
+            }) })));
         return newNoteData;
     }
     async getNote(noteId) {
@@ -50,7 +52,9 @@ let NoteService = class NoteService {
         })
             .getMany();
         const notesData = (0, camelcase_util_1.snakeCaseKeys)(note_entity_1.Note, data);
-        const newNoteData = notesData.map((note) => (Object.assign(Object.assign({}, note), { tags: note.tags.map((noteTag) => noteTag.tag) })))[0];
+        const newNoteData = notesData.map((note) => (Object.assign(Object.assign({}, note), { tags: note.tags.map((noteTag) => {
+                return Object.assign({ id: noteTag.id }, noteTag.tag);
+            }) })))[0];
         return newNoteData;
     }
     async createNote(request) {
@@ -75,6 +79,21 @@ let NoteService = class NoteService {
     async deleteNote(idNote) {
         const data = await this.noteRepository.delete(idNote);
         return data;
+    }
+    async updateNote(noteId, request) {
+        const nodeIdNumber = Number(noteId);
+        await this.noteRepository.update({
+            noteId: nodeIdNumber,
+        }, {
+            title: request.title,
+            timeFrom: request.timeFrom,
+            timeTo: request.timeTo,
+            description: request.description,
+            cover: request.cover,
+        });
+        await this.todoService.updateTodos(request.todos, nodeIdNumber);
+        await this.noteTagService.updateNoteTag(request.tags, nodeIdNumber);
+        return true;
     }
 };
 NoteService = __decorate([
