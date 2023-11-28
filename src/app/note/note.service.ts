@@ -8,6 +8,7 @@ import { NoteCreateRequest } from './dto/note-create-request.dto';
 import { snakeCaseKeys } from 'src/utils/camelcase.util';
 import { NoteTag } from '@app/entities/note-tag.entity';
 import { NoteUpdateDTO } from './dto/note-update-request.dto';
+import { User } from '@app/entities/user.entity';
 
 @Injectable()
 export class NoteService {
@@ -18,13 +19,17 @@ export class NoteService {
     private readonly noteTagService: NoteTagService,
   ) {}
 
-  public async getNotes() {
+  public async getNotes(request: User) {
     const data = await this.noteRepository
       .createQueryBuilder('note')
       .leftJoinAndSelect('note.todos', 'todo')
       .leftJoinAndSelect('note.tags', 'note-tag')
       .leftJoinAndSelect('note-tag.tag', 'tag')
+      .leftJoinAndSelect('note.user', 'user')
       .orderBy('note.createdAt', 'DESC')
+      .where('user.id = :userId', {
+        userId: request.id,
+      })
       .getMany();
 
     const notesData = snakeCaseKeys(Note, data as Note[]);

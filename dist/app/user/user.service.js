@@ -35,6 +35,14 @@ let UsersService = class UsersService {
         const createdUser = await this.userRepository.save(payload);
         return createdUser;
     }
+    async checkEmail(request) {
+        const { email } = request;
+        const user = await this.userRepository.findOne({ where: { email: email } });
+        if (user) {
+            throw new common_1.HttpException('User is exits', 404);
+        }
+        return true;
+    }
     async login(request) {
         const email = request.email;
         const user = await this.userRepository.findOne({ where: { email: email } });

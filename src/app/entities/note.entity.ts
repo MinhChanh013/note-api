@@ -1,8 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Expose } from 'class-transformer';
 import { Todo } from './todo.entity';
 import { NoteTag } from './note-tag.entity';
+import { User } from './user.entity';
 
 @Entity({ name: 'note' })
 export class Note {
@@ -53,6 +61,10 @@ export class Note {
   })
   @OneToMany(() => Todo, (todo) => todo.note)
   todos: Todo[];
+
+  @ManyToOne(() => User, (user) => user.notes)
+  @JoinColumn({ name: 'user' })
+  user: User;
 
   @ApiProperty({
     example: [

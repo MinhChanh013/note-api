@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Note } from './note.entity';
 
 @Entity({ name: 'user' })
 export class User {
@@ -23,6 +24,9 @@ export class User {
   })
   @Column({ nullable: true })
   password: string;
+
+  @OneToMany(() => Note, (note) => note.user)
+  notes: Note[];
 
   @Column({ nullable: true })
   created_at: string;

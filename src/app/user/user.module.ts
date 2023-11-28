@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@app/entities/user.entity';
 import { UserController } from './user.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { NodeMailerService } from '@libs/infrastructure/nodemailer/nodemailer.service';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.JWT_SECRET,
     }),
   ],
-  providers: [UsersService],
+  providers: [UsersService, NodeMailerService],
   controllers: [UserController],
   exports: [UsersService],
 })

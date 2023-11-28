@@ -9,47 +9,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.NoteMailDTO = void 0;
 const swagger_1 = require("@nestjs/swagger");
-const typeorm_1 = require("typeorm");
-const note_entity_1 = require("./note.entity");
-let User = class User {
-};
-__decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
-    __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+class NoteMailDTO {
+}
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'Nguyễn Minh Chánh',
+        example: 'minhchanh1910@gmail.com',
     }),
-    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "full_name", void 0);
+], NoteMailDTO.prototype, "email", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'nguyenminhchanh1910@gmail.com',
+        example: 'Confirm OTP code for forgot password account',
     }),
-    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], NoteMailDTO.prototype, "subject", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'Chanh013',
+        example: '<p>Hello wordls</p>',
     }),
-    (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
-__decorate([
-    (0, typeorm_1.OneToMany)(() => note_entity_1.Note, (note) => note.user),
-    __metadata("design:type", Array)
-], User.prototype, "notes", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "created_at", void 0);
-User = __decorate([
-    (0, typeorm_1.Entity)({ name: 'user' })
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entity.js.map
+], NoteMailDTO.prototype, "body", void 0);
+exports.NoteMailDTO = NoteMailDTO;
+//# sourceMappingURL=notemailer.dto.js.map

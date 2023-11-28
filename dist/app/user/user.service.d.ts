@@ -11,7 +11,9 @@ export declare class UsersService {
         id?: number;
         full_name?: string;
         email: string;
+        notes: import("../entities/note.entity").Note[];
     } & User>;
+    checkEmail(request: User): Promise<boolean>;
     login(request: User): Promise<{
         access_token: string;
     }>;

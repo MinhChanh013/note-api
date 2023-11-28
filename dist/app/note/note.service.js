@@ -26,13 +26,17 @@ let NoteService = class NoteService {
         this.todoService = todoService;
         this.noteTagService = noteTagService;
     }
-    async getNotes() {
+    async getNotes(request) {
         const data = await this.noteRepository
             .createQueryBuilder('note')
             .leftJoinAndSelect('note.todos', 'todo')
             .leftJoinAndSelect('note.tags', 'note-tag')
             .leftJoinAndSelect('note-tag.tag', 'tag')
+            .leftJoinAndSelect('note.user', 'user')
             .orderBy('note.createdAt', 'DESC')
+            .where('user.id = :userId', {
+            userId: request.id,
+        })
             .getMany();
         const notesData = (0, camelcase_util_1.snakeCaseKeys)(note_entity_1.Note, data);
         const newNoteData = notesData.map((note) => (Object.assign(Object.assign({}, note), { tags: note.tags.map((noteTag) => {

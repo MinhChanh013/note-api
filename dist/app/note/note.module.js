@@ -14,11 +14,19 @@ const typeorm_1 = require("@nestjs/typeorm");
 const note_entity_1 = require("../entities/note.entity");
 const todo_module_1 = require("../todo/todo.module");
 const note_tag_module_1 = require("../note-tag/note-tag.module");
+const jwt_1 = require("@nestjs/jwt");
 let NoteModule = class NoteModule {
 };
 NoteModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([note_entity_1.Note]), todo_module_1.TodoModule, note_tag_module_1.NoteTagModule],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([note_entity_1.Note]),
+            todo_module_1.TodoModule,
+            note_tag_module_1.NoteTagModule,
+            jwt_1.JwtModule.register({
+                secret: process.env.JWT_SECRET,
+            }),
+        ],
         controllers: [note_controller_1.NoteController],
         providers: [note_service_1.NoteService],
     })

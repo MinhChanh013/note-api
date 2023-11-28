@@ -19,12 +19,13 @@ const note_service_1 = require("./note.service");
 const camelcase_util_1 = require("../../utils/camelcase.util");
 const note_create_request_dto_1 = require("./dto/note-create-request.dto");
 const note_update_request_dto_1 = require("./dto/note-update-request.dto");
+const jwt_service_1 = require("../../libs/infrastructure/jwt/jwt.service");
 let NoteController = class NoteController {
     constructor(noteService) {
         this.noteService = noteService;
     }
-    async getNotes() {
-        const data = await this.noteService.getNotes();
+    async getNotes(request) {
+        const data = await this.noteService.getNotes(request.user);
         return data;
     }
     async getNote(noteId) {
@@ -45,13 +46,18 @@ let NoteController = class NoteController {
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
     (0, common_1.Get)('notes'),
     (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], NoteController.prototype, "getNotes", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
     (0, common_1.Get)('note/:noteId'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)('noteId')),

@@ -18,16 +18,27 @@ const swagger_1 = require("@nestjs/swagger");
 const user_service_1 = require("./user.service");
 const user_entity_1 = require("../entities/user.entity");
 const jwt_service_1 = require("../../libs/infrastructure/jwt/jwt.service");
+const notemailer_dto_1 = require("../../libs/infrastructure/nodemailer/dto/notemailer.dto");
+const nodemailer_service_1 = require("../../libs/infrastructure/nodemailer/nodemailer.service");
 let UserController = class UserController {
-    constructor(userService) {
+    constructor(userService, notemailService) {
         this.userService = userService;
+        this.notemailService = notemailService;
     }
     async register(request) {
         const data = await this.userService.registerUser(request);
         return data;
     }
+    async checkEmail(request) {
+        const data = await this.userService.checkEmail(request);
+        return data;
+    }
     async login(request) {
         const data = await this.userService.login(request);
+        return data;
+    }
+    async SendEmail(request) {
+        const data = await this.notemailService.sendEmail(request);
         return data;
     }
     async getUserInfor(request) {
@@ -43,12 +54,26 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "register", null);
 __decorate([
+    (0, common_1.Post)('check-email'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "checkEmail", null);
+__decorate([
     (0, common_1.Post)('login'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [user_entity_1.User]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('send-mail'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [notemailer_dto_1.NoteMailDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "SendEmail", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_service_1.JwtService),
     (0, swagger_1.ApiSecurity)('JWT-auth'),
@@ -61,7 +86,8 @@ __decorate([
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('user'),
-    __metadata("design:paramtypes", [user_service_1.UsersService])
+    __metadata("design:paramtypes", [user_service_1.UsersService,
+        nodemailer_service_1.NodeMailerService])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

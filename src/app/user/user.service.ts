@@ -34,6 +34,20 @@ export class UsersService {
    * @param request
    * @returns
    */
+  async checkEmail(request: User) {
+    const { email } = request;
+    const user = await this.userRepository.findOne({ where: { email: email } });
+    if (user) {
+      throw new HttpException('User is exits', 404);
+    }
+    return true;
+  }
+
+  /**
+   *
+   * @param request
+   * @returns
+   */
   async login(request: User) {
     const email = request.email;
     const user = await this.userRepository.findOne({ where: { email: email } });

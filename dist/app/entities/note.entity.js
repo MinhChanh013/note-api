@@ -15,6 +15,7 @@ const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
 const todo_entity_1 = require("./todo.entity");
 const note_tag_entity_1 = require("./note-tag.entity");
+const user_entity_1 = require("./user.entity");
 let Note = class Note {
 };
 __decorate([
@@ -72,6 +73,11 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => todo_entity_1.Todo, (todo) => todo.note),
     __metadata("design:type", Array)
 ], Note.prototype, "todos", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.notes),
+    (0, typeorm_1.JoinColumn)({ name: 'user' }),
+    __metadata("design:type", user_entity_1.User)
+], Note.prototype, "user", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
         example: [

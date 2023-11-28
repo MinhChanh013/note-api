@@ -6,26 +6,32 @@ import {
   Put,
   Body,
   Param,
+  UseGuards,
+  Request,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { NoteService } from './note.service';
-import { Note } from '@app/entities/note.entity';
 import { snakeCaseKeys } from 'src/utils/camelcase.util';
 import { NoteCreateRequest } from './dto/note-create-request.dto';
 import { NoteUpdateDTO } from './dto/note-update-request.dto';
+import { JwtService } from '@libs/infrastructure/jwt/jwt.service';
 
 @ApiTags('note')
 @Controller('note')
 export class NoteController {
   constructor(private readonly noteService: NoteService) {}
 
+  @UseGuards(JwtService)
+  @ApiSecurity('JWT-auth')
   @Get('notes')
   @HttpCode(200)
-  public async getNotes() {
-    const data = await this.noteService.getNotes();
+  public async getNotes(@Request() request: any) {
+    const data = await this.noteService.getNotes(request.user);
     return data;
   }
 
+  @UseGuards(JwtService)
+  @ApiSecurity('JWT-auth')
   @Get('note/:noteId')
   @HttpCode(200)
   public async getNote(@Param('noteId') noteId: string) {
