@@ -12,11 +12,17 @@ const tag_controller_1 = require("./tag.controller");
 const tag_service_1 = require("./tag.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const tag_entity_1 = require("../entities/tag.entity");
+const jwt_1 = require("@nestjs/jwt");
 let TagModule = class TagModule {
 };
 TagModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([tag_entity_1.Tag])],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([tag_entity_1.Tag]),
+            jwt_1.JwtModule.register({
+                secret: process.env.JWT_SECRET,
+            }),
+        ],
         controllers: [tag_controller_1.TagController],
         providers: [tag_service_1.TagService],
     })

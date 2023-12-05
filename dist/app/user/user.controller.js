@@ -20,10 +20,12 @@ const user_entity_1 = require("../entities/user.entity");
 const jwt_service_1 = require("../../libs/infrastructure/jwt/jwt.service");
 const notemailer_dto_1 = require("../../libs/infrastructure/nodemailer/dto/notemailer.dto");
 const nodemailer_service_1 = require("../../libs/infrastructure/nodemailer/nodemailer.service");
+const cloudinary_service_1 = require("../../libs/infrastructure/cloudinary/cloudinary.service");
 let UserController = class UserController {
-    constructor(userService, notemailService) {
+    constructor(userService, notemailService, cloudinaryService) {
         this.userService = userService;
         this.notemailService = notemailService;
+        this.cloudinaryService = cloudinaryService;
     }
     async register(request) {
         const data = await this.userService.registerUser(request);
@@ -43,6 +45,24 @@ let UserController = class UserController {
     }
     async getUserInfor(request) {
         const data = await this.userService.getUserInfor(request.user);
+        return data;
+    }
+    async uploadBackground(requestUser, request) {
+        const urlBackground = await this.cloudinaryService.uploadImage(request);
+        const userData = await this.userService.getUserInfor(requestUser.user);
+        const dataRequest = Object.assign(Object.assign({}, userData), { background: urlBackground });
+        await this.userService.updateUser(dataRequest, requestUser.user.id);
+        return urlBackground;
+    }
+    async uploadAvatar(requestUser, request) {
+        const urlAvatar = await this.cloudinaryService.uploadImage(request);
+        const userData = await this.userService.getUserInfor(requestUser.user);
+        const dataRequest = Object.assign(Object.assign({}, userData), { avatar: urlAvatar });
+        await this.userService.updateUser(dataRequest, requestUser.user.id);
+        return urlAvatar;
+    }
+    async updateUser(request, userId) {
+        const data = await this.userService.updateUser(request, userId);
         return data;
     }
 };
@@ -83,11 +103,42 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserInfor", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
+    (0, common_1.Post)('upload-background'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "uploadBackground", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
+    (0, common_1.Post)('upload-avatar'),
+    __param(0, (0, common_1.Request)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "uploadAvatar", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
+    (0, common_1.Put)('update/:userId'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [user_entity_1.User, String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateUser", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('user'),
     __metadata("design:paramtypes", [user_service_1.UsersService,
-        nodemailer_service_1.NodeMailerService])
+        nodemailer_service_1.NodeMailerService,
+        cloudinary_service_1.CloudinaryService])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

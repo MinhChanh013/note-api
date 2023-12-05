@@ -58,9 +58,19 @@ let UsersService = class UsersService {
         };
     }
     async getUserInfor(request) {
-        return {
-            user_infor: request,
-        };
+        return this.userRepository.findOne({ where: { id: request.id } });
+    }
+    async updateUser(request, userId) {
+        const userIdNumber = parseInt(userId);
+        await this.userRepository.update({
+            id: userIdNumber,
+        }, {
+            full_name: request.full_name,
+            avatar: request.avatar,
+            background: request.background,
+            password: request.password,
+        });
+        return true;
     }
 };
 UsersService = __decorate([

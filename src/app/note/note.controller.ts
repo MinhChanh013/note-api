@@ -39,14 +39,17 @@ export class NoteController {
     return data;
   }
 
+  @UseGuards(JwtService)
+  @ApiSecurity('JWT-auth')
   @Post('create')
   @ApiOkResponse({
     description: 'Create new note',
   })
   async createNote(
     @Body() request: NoteCreateRequest,
+    @Request() requestUser: any,
   ): Promise<NoteCreateRequest | object> {
-    const data = await this.noteService.createNote(request);
+    const data = await this.noteService.createNote(request, requestUser.user);
     // convert camelCase to snake_case
     const noteData = snakeCaseKeys(
       NoteCreateRequest,

@@ -66,10 +66,16 @@ export class NoteService {
     return newNoteData;
   }
 
-  public async createNote(request: NoteCreateRequest): Promise<Note | null> {
+  public async createNote(
+    request: NoteCreateRequest,
+    requestUser: User,
+  ): Promise<Note | null> {
     request.createdAt = new Date().toISOString();
     // save note
-    const newNote = await this.noteRepository.save(request);
+    const newNote = await this.noteRepository.save({
+      ...request,
+      user: requestUser,
+    });
     if (newNote) {
       for (const todo of request.todos) {
         // save todos

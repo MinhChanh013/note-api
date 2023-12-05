@@ -19,17 +19,18 @@ const tag_service_1 = require("./tag.service");
 const tag_entity_1 = require("../entities/tag.entity");
 const camelcase_util_1 = require("../../utils/camelcase.util");
 const tag_update_request_dto_1 = require("./dto/tag-update-request.dto");
+const jwt_service_1 = require("../../libs/infrastructure/jwt/jwt.service");
 let TagController = class TagController {
     constructor(tagService) {
         this.tagService = tagService;
     }
-    async getTags() {
-        const data = await this.tagService.getTags();
+    async getTags(request) {
+        const data = await this.tagService.getTags(request.user);
         const tagsData = (0, camelcase_util_1.snakeCaseKeys)(tag_entity_1.Tag, data);
         return tagsData;
     }
-    async createTag(request) {
-        const data = await this.tagService.createTag(request);
+    async createTag(request, requestUser) {
+        const data = await this.tagService.createTag(request, requestUser.user);
         const tagsData = (0, camelcase_util_1.snakeCaseKeys)(tag_entity_1.Tag, data);
         return tagsData;
     }
@@ -41,18 +42,24 @@ let TagController = class TagController {
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
     (0, common_1.Get)('tags'),
     (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TagController.prototype, "getTags", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
     (0, common_1.Post)('create'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [tag_entity_1.Tag]),
+    __metadata("design:paramtypes", [tag_entity_1.Tag, Object]),
     __metadata("design:returntype", Promise)
 ], TagController.prototype, "createTag", null);
 __decorate([

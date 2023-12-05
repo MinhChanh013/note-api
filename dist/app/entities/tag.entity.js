@@ -14,6 +14,7 @@ const swagger_1 = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const class_transformer_1 = require("class-transformer");
 const note_tag_entity_1 = require("./note-tag.entity");
+const user_entity_1 = require("./user.entity");
 let Tag = class Tag {
 };
 __decorate([
@@ -39,6 +40,11 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Tag.prototype, "color", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.notes),
+    (0, typeorm_1.JoinColumn)({ name: 'user' }),
+    __metadata("design:type", user_entity_1.User)
+], Tag.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => note_tag_entity_1.NoteTag, (noteTag) => noteTag.tag),
     __metadata("design:type", Array)

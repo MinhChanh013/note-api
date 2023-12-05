@@ -32,8 +32,8 @@ let NoteController = class NoteController {
         const data = await this.noteService.getNote(noteId);
         return data;
     }
-    async createNote(request) {
-        const data = await this.noteService.createNote(request);
+    async createNote(request, requestUser) {
+        const data = await this.noteService.createNote(request, requestUser.user);
         const noteData = (0, camelcase_util_1.snakeCaseKeys)(note_create_request_dto_1.NoteCreateRequest, data);
         return noteData;
     }
@@ -66,13 +66,16 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], NoteController.prototype, "getNote", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
     (0, common_1.Post)('create'),
     (0, swagger_1.ApiOkResponse)({
         description: 'Create new note',
     }),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [note_create_request_dto_1.NoteCreateRequest]),
+    __metadata("design:paramtypes", [note_create_request_dto_1.NoteCreateRequest, Object]),
     __metadata("design:returntype", Promise)
 ], NoteController.prototype, "createNote", null);
 __decorate([

@@ -12,7 +12,7 @@ export declare class NoteService {
     constructor(noteRepository: Repository<Note>, todoService: TodoService, noteTagService: NoteTagService);
     getNotes(request: User): Promise<any>;
     getNote(noteId: string): Promise<any>;
-    createNote(request: NoteCreateRequest): Promise<Note | null>;
+    createNote(request: NoteCreateRequest, requestUser: User): Promise<Note | null>;
     deleteNote(idNote: string): Promise<NoteCreateRequest | object>;
     updateNote(noteId: string, request: NoteUpdateDTO): Promise<boolean>;
 }

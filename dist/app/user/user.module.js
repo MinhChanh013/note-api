@@ -14,6 +14,7 @@ const user_entity_1 = require("../entities/user.entity");
 const user_controller_1 = require("./user.controller");
 const jwt_1 = require("@nestjs/jwt");
 const nodemailer_service_1 = require("../../libs/infrastructure/nodemailer/nodemailer.service");
+const cloudinary_service_1 = require("../../libs/infrastructure/cloudinary/cloudinary.service");
 let UsersModule = class UsersModule {
 };
 UsersModule = __decorate([
@@ -24,7 +25,7 @@ UsersModule = __decorate([
                 secret: process.env.JWT_SECRET,
             }),
         ],
-        providers: [user_service_1.UsersService, nodemailer_service_1.NodeMailerService],
+        providers: [user_service_1.UsersService, nodemailer_service_1.NodeMailerService, cloudinary_service_1.CloudinaryService],
         controllers: [user_controller_1.UserController],
         exports: [user_service_1.UsersService],
     })

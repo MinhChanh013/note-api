@@ -21,11 +21,13 @@ let TagService = class TagService {
     constructor(tagRepository) {
         this.tagRepository = tagRepository;
     }
-    async getTags() {
-        return await this.tagRepository.find();
+    async getTags(request) {
+        return await this.tagRepository.find({
+            where: { user: { id: request.id } },
+        });
     }
-    async createTag(request) {
-        const payload = Object.assign(Object.assign({}, request), { createdAt: new Date().toISOString() });
+    async createTag(request, requestUser) {
+        const payload = Object.assign(Object.assign({}, request), { createdAt: new Date().toISOString(), user: requestUser });
         return await this.tagRepository.save(payload);
     }
     async updateTag(request, tagId) {

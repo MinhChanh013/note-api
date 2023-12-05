@@ -5,6 +5,7 @@ import { User } from '@app/entities/user.entity';
 import { UserController } from './user.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { NodeMailerService } from '@libs/infrastructure/nodemailer/nodemailer.service';
+import { CloudinaryService } from '@libs/infrastructure/cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { NodeMailerService } from '@libs/infrastructure/nodemailer/nodemailer.se
       secret: process.env.JWT_SECRET,
     }),
   ],
-  providers: [UsersService, NodeMailerService],
+  providers: [UsersService, NodeMailerService, CloudinaryService],
   controllers: [UserController],
   exports: [UsersService],
 })

@@ -13,6 +13,7 @@ exports.User = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 const note_entity_1 = require("./note.entity");
+const tag_entity_1 = require("./tag.entity");
 let User = class User {
 };
 __decorate([
@@ -41,9 +42,27 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'https://res.cloudinary.com/dvdejvb2x/image/upload/v1701701648/hjxuecjtg7qlkwrf0y7j.png',
+    }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "avatar", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        example: 'https://res.cloudinary.com/dvdejvb2x/image/upload/v1701701636/cauqv8ikqm9owcrjc7ck.jpg',
+    }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], User.prototype, "background", void 0);
+__decorate([
     (0, typeorm_1.OneToMany)(() => note_entity_1.Note, (note) => note.user),
     __metadata("design:type", Array)
 ], User.prototype, "notes", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => tag_entity_1.Tag, (tag) => tag.user),
+    __metadata("design:type", Array)
+], User.prototype, "tags", void 0);
 __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)

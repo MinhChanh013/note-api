@@ -6,7 +6,7 @@ export declare class NoteController {
     constructor(noteService: NoteService);
     getNotes(request: any): Promise<any>;
     getNote(noteId: string): Promise<any>;
-    createNote(request: NoteCreateRequest): Promise<NoteCreateRequest | object>;
+    createNote(request: NoteCreateRequest, requestUser: any): Promise<NoteCreateRequest | object>;
     deleteNote(deleteNoteDto: {
         idNote: string;
     }): Promise<NoteCreateRequest | object>;

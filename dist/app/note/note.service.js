@@ -61,9 +61,9 @@ let NoteService = class NoteService {
             }) })))[0];
         return newNoteData;
     }
-    async createNote(request) {
+    async createNote(request, requestUser) {
         request.createdAt = new Date().toISOString();
-        const newNote = await this.noteRepository.save(request);
+        const newNote = await this.noteRepository.save(Object.assign(Object.assign({}, request), { user: requestUser }));
         if (newNote) {
             for (const todo of request.todos) {
                 const payloadTodo = Object.assign(Object.assign({}, todo), { note: newNote });

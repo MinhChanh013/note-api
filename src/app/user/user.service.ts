@@ -62,8 +62,22 @@ export class UsersService {
   }
 
   async getUserInfor(request: User) {
-    return {
-      user_infor: request,
-    };
+    return this.userRepository.findOne({ where: { id: request.id } });
+  }
+
+  async updateUser(request: User, userId: string) {
+    const userIdNumber = parseInt(userId);
+    await this.userRepository.update(
+      {
+        id: userIdNumber,
+      },
+      {
+        full_name: request.full_name,
+        avatar: request.avatar,
+        background: request.background,
+        password: request.password,
+      },
+    );
+    return true;
   }
 }
