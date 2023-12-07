@@ -72,6 +72,22 @@ let UsersService = class UsersService {
         });
         return true;
     }
+    async updatePassword(request, userId) {
+        const userIdNumber = parseInt(userId);
+        const user = await this.userRepository.findOne({
+            where: { id: userIdNumber },
+        });
+        const isPasswordValid = await (0, bcrypt_1.compare)(request.currentPassword, user.password);
+        if (!isPasswordValid)
+            throw new common_1.HttpException('Password is incorrect', 400);
+        const hashpassword = await (0, bcrypt_1.hash)(request.newPassword, 10);
+        await this.userRepository.update({
+            id: userIdNumber,
+        }, {
+            password: hashpassword,
+        });
+        return true;
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

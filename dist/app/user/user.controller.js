@@ -65,6 +65,10 @@ let UserController = class UserController {
         const data = await this.userService.updateUser(request, userId);
         return data;
     }
+    async updatePassword(request, userId) {
+        const data = await this.userService.updatePassword(request, userId);
+        return data;
+    }
 };
 __decorate([
     (0, common_1.Post)('register'),
@@ -133,6 +137,16 @@ __decorate([
     __metadata("design:paramtypes", [user_entity_1.User, String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateUser", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_service_1.JwtService),
+    (0, swagger_1.ApiSecurity)('JWT-auth'),
+    (0, common_1.Put)('update-password/:userId'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updatePassword", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     (0, swagger_1.ApiTags)('user'),

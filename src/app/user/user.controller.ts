@@ -99,4 +99,15 @@ export class UserController {
     const data = await this.userService.updateUser(request, userId);
     return data;
   }
+
+  @UseGuards(JwtService)
+  @ApiSecurity('JWT-auth')
+  @Put('update-password/:userId')
+  async updatePassword(
+    @Body() request: { currentPassword: string; newPassword: string },
+    @Param('userId') userId: string,
+  ) {
+    const data = await this.userService.updatePassword(request, userId);
+    return data;
+  }
 }

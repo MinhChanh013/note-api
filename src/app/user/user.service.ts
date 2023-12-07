@@ -80,4 +80,29 @@ export class UsersService {
     );
     return true;
   }
+
+  async updatePassword(
+    request: { currentPassword: string; newPassword: string },
+    userId: string,
+  ) {
+    const userIdNumber = parseInt(userId);
+    const user = await this.userRepository.findOne({
+      where: { id: userIdNumber },
+    });
+    const isPasswordValid = await compare(
+      request.currentPassword,
+      user.password,
+    );
+    if (!isPasswordValid) throw new HttpException('Password is incorrect', 400);
+    const hashpassword = await hash(request.newPassword, 10);
+    await this.userRepository.update(
+      {
+        id: userIdNumber,
+      },
+      {
+        password: hashpassword,
+      },
+    );
+    return true;
+  }
 }

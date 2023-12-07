@@ -32,4 +32,8 @@ export declare class UserController {
         url: string;
     }): Promise<string>;
     updateUser(request: User, userId: string): Promise<boolean>;
+    updatePassword(request: {
+        currentPassword: string;
+        newPassword: string;
+    }, userId: string): Promise<boolean>;
 }
