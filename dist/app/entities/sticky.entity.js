@@ -9,71 +9,71 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Sticky = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
-const note_entity_1 = require("./note.entity");
-const tag_entity_1 = require("./tag.entity");
-const sticky_entity_1 = require("./sticky.entity");
-let User = class User {
+const class_transformer_1 = require("class-transformer");
+const user_entity_1 = require("./user.entity");
+let Sticky = class Sticky {
 };
 __decorate([
     (0, typeorm_1.PrimaryGeneratedColumn)(),
     __metadata("design:type", Number)
-], User.prototype, "id", void 0);
+], Sticky.prototype, "id", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'Nguyễn Minh Chánh',
+        example: 'Meeting',
     }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "full_name", void 0);
+], Sticky.prototype, "content", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'nguyenminhchanh1910@gmail.com',
+        example: '569bd40f-0aac-4648-955d-afdd614924fb',
     }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "email", void 0);
+], Sticky.prototype, "uuid", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'Chanh013',
+        example: '#4BCE97',
     }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "password", void 0);
+], Sticky.prototype, "cover", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'https://res.cloudinary.com/dvdejvb2x/image/upload/v1701701648/hjxuecjtg7qlkwrf0y7j.png',
+        example: 'left-0 top-0',
     }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "avatar", void 0);
+], Sticky.prototype, "position", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({
-        example: 'https://res.cloudinary.com/dvdejvb2x/image/upload/v1701701636/cauqv8ikqm9owcrjc7ck.jpg',
+        example: false,
     }),
     (0, typeorm_1.Column)({ nullable: true }),
-    __metadata("design:type", String)
-], User.prototype, "background", void 0);
+    __metadata("design:type", Boolean)
+], Sticky.prototype, "minimize", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => note_entity_1.Note, (note) => note.user),
-    __metadata("design:type", Array)
-], User.prototype, "notes", void 0);
+    (0, swagger_1.ApiProperty)({
+        example: 0,
+    }),
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Sticky.prototype, "index", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => tag_entity_1.Tag, (tag) => tag.user),
-    __metadata("design:type", Array)
-], User.prototype, "tags", void 0);
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.User, (user) => user.notes),
+    (0, typeorm_1.JoinColumn)({ name: 'user' }),
+    __metadata("design:type", user_entity_1.User)
+], Sticky.prototype, "user", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => sticky_entity_1.Sticky, (sticky) => sticky.user),
-    __metadata("design:type", Array)
-], User.prototype, "stickys", void 0);
-__decorate([
+    (0, class_transformer_1.Expose)({ name: 'created_at' }),
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
-], User.prototype, "created_at", void 0);
-User = __decorate([
-    (0, typeorm_1.Entity)({ name: 'user' })
-], User);
-exports.User = User;
-//# sourceMappingURL=user.entity.js.map
+], Sticky.prototype, "createdAt", void 0);
+Sticky = __decorate([
+    (0, typeorm_1.Entity)({ name: 'sticky' })
+], Sticky);
+exports.Sticky = Sticky;
+//# sourceMappingURL=sticky.entity.js.map

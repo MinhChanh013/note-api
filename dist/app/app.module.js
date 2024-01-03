@@ -14,6 +14,7 @@ const note_module_1 = require("./note/note.module");
 const todo_module_1 = require("./todo/todo.module");
 const tag_module_1 = require("./tag/tag.module");
 const note_tag_module_1 = require("./note-tag/note-tag.module");
+const sticky_module_1 = require("./sticky/sticky.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -25,6 +26,7 @@ AppModule = __decorate([
             todo_module_1.TodoModule,
             tag_module_1.TagModule,
             note_tag_module_1.NoteTagModule,
+            sticky_module_1.StickyModule,
         ],
         providers: [],
         controllers: [],

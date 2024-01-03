@@ -86,7 +86,7 @@ export class NoteService {
       // save note-tag
       for (const tag of request.tags) {
         const payloadNoteTag = {
-          note: request as unknown as Note,
+          note: newNote,
           tag: tag,
           createdAt: new Date().toISOString(),
         };

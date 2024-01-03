@@ -71,7 +71,7 @@ let NoteService = class NoteService {
             }
             for (const tag of request.tags) {
                 const payloadNoteTag = {
-                    note: request,
+                    note: newNote,
                     tag: tag,
                     createdAt: new Date().toISOString(),
                 };

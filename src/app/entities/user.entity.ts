@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Note } from './note.entity';
 import { Tag } from './tag.entity';
+import { Sticky } from './sticky.entity';
 
 @Entity({ name: 'user' })
 export class User {
@@ -45,6 +46,9 @@ export class User {
 
   @OneToMany(() => Tag, (tag) => tag.user)
   tags: Tag[];
+
+  @OneToMany(() => Sticky, (sticky) => sticky.user)
+  stickys: Sticky[];
 
   @Column({ nullable: true })
   created_at: string;

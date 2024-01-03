@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TypeOrmConfigService = void 0;
 const note_tag_entity_1 = require("../entities/note-tag.entity");
 const note_entity_1 = require("../entities/note.entity");
+const sticky_entity_1 = require("../entities/sticky.entity");
 const tag_entity_1 = require("../entities/tag.entity");
 const todo_entity_1 = require("../entities/todo.entity");
 const user_entity_1 = require("../entities/user.entity");
@@ -33,7 +34,7 @@ let TypeOrmConfigService = class TypeOrmConfigService {
                 ca: this.config.get('CA_SSL_PATH'),
                 rejectUnauthorized: false,
             },
-            entities: [user_entity_1.User, note_entity_1.Note, todo_entity_1.Todo, tag_entity_1.Tag, note_tag_entity_1.NoteTag],
+            entities: [user_entity_1.User, note_entity_1.Note, todo_entity_1.Todo, tag_entity_1.Tag, note_tag_entity_1.NoteTag, sticky_entity_1.Sticky],
             synchronize: false,
         };
     }

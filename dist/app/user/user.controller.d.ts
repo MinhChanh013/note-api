@@ -18,6 +18,7 @@ export declare class UserController {
         background: string;
         notes: import("../entities/note.entity").Note[];
         tags: import("../entities/tag.entity").Tag[];
+        stickys: import("../entities/sticky.entity").Sticky[];
     } & User>;
     checkEmail(request?: User): Promise<boolean>;
     login(request?: User): Promise<{

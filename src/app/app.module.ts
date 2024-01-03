@@ -5,6 +5,7 @@ import { NoteModule } from './note/note.module';
 import { TodoModule } from './todo/todo.module';
 import { TagModule } from './tag/tag.module';
 import { NoteTagModule } from './note-tag/note-tag.module';
+import { StickyModule } from './sticky/sticky.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { NoteTagModule } from './note-tag/note-tag.module';
     TodoModule,
     TagModule,
     NoteTagModule,
+    StickyModule,
   ],
   providers: [],
   controllers: [],
